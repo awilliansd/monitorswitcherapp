@@ -33,7 +33,7 @@ internal static class Program
 
         NotifyIcon trayIcon = new NotifyIcon
         {
-            Icon = SystemIcons.Application,
+            Icon = new Icon("monitorswitcher.ico"),
             Text = "Monitor Switcher",
             Visible = true,
             ContextMenuStrip = new ContextMenuStrip()
@@ -90,7 +90,7 @@ internal static class Program
     {
         NotifyIcon balloon = new NotifyIcon
         {
-            Icon = SystemIcons.Application,
+            Icon = new Icon("monitorswitcher.ico"),
             Visible = true
         };
         balloon.ShowBalloonTip(3000, "Monitor Switcher", message, ToolTipIcon.Info);
