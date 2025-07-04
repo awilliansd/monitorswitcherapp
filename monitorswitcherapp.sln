@@ -4,8 +4,6 @@ VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonitorSwitcherApp", "MonitorSwitcherApp.csproj", "{FB021E7C-9AE6-73CA-4BBC-A05696DD4D54}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "MonitorSwitcherAppInstaller", "MonitorSwitcherAppInstaller.vdproj", "{290228FE-8E64-9A5C-B917-1247A5F42A6E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -16,10 +14,6 @@ Global
 		{FB021E7C-9AE6-73CA-4BBC-A05696DD4D54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB021E7C-9AE6-73CA-4BBC-A05696DD4D54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB021E7C-9AE6-73CA-4BBC-A05696DD4D54}.Release|Any CPU.Build.0 = Release|Any CPU
-		{290228FE-8E64-9A5C-B917-1247A5F42A6E}.Debug|Any CPU.ActiveCfg = Debug
-		{290228FE-8E64-9A5C-B917-1247A5F42A6E}.Debug|Any CPU.Build.0 = Debug
-		{290228FE-8E64-9A5C-B917-1247A5F42A6E}.Release|Any CPU.ActiveCfg = Release
-		{290228FE-8E64-9A5C-B917-1247A5F42A6E}.Release|Any CPU.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
