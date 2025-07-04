@@ -1,37 +1,39 @@
 using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using System.Drawing;
+
+namespace MonitorSwitcherApp;
 
 internal static class Program
 {
-    static string tool = "MultiMonitorTool.exe";
-    static string configFile = "display_config.txt";
-    static string display1 = "";
-    static string display2 = "";
+    private const string Tool = "MultiMonitorTool.exe";
+    private const string ConfigFile = "display_config.txt";
+    private static string _display1 = "";
+    private static string _display2 = "";
 
     [STAThread]
-    static void Main()
+    private static void Main()
     {
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault(false);
 
-        if (!File.Exists(tool))
+        if (!File.Exists(Tool))
         {
-            MessageBox.Show($"Arquivo '{tool}' não encontrado.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show($"Arquivo '{Tool}' não encontrado.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;
         }
 
-        if (!File.Exists(configFile))
+        if (!File.Exists(ConfigFile))
         {
-            MessageBox.Show($"Arquivo '{configFile}' não encontrado.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show($"Arquivo '{ConfigFile}' não encontrado.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;
         }
 
         LoadDisplayConfig();
 
-        NotifyIcon trayIcon = new NotifyIcon
+        var trayIcon = new NotifyIcon
         {
             Icon = new Icon("monitorswitcher.ico"),
             Text = "Monitor Switcher",
@@ -39,10 +41,10 @@ internal static class Program
             ContextMenuStrip = new ContextMenuStrip()
         };
 
-        trayIcon.ContextMenuStrip.Items.Add("Modo Reunião", null, (_, __) => SetPrimary(display2, "Modo Reunião"));
-        trayIcon.ContextMenuStrip.Items.Add("Modo Jogo", null, (_, __) => SetPrimary(display1, "Modo Jogo"));
+        trayIcon.ContextMenuStrip.Items.Add("Modo Reunião", null, (_, _) => SetPrimary(_display2, "Modo Reunião"));
+        trayIcon.ContextMenuStrip.Items.Add("Modo Jogo", null, (_, _) => SetPrimary(_display1, "Modo Jogo"));
         trayIcon.ContextMenuStrip.Items.Add(new ToolStripSeparator());
-        trayIcon.ContextMenuStrip.Items.Add("Sair", null, (_, __) =>
+        trayIcon.ContextMenuStrip.Items.Add("Sair", null, (_, _) =>
         {
             trayIcon.Visible = false;
             Application.Exit();
@@ -53,23 +55,23 @@ internal static class Program
 
     static void LoadDisplayConfig()
     {
-        var lines = File.ReadAllLines(configFile);
+        var lines = File.ReadAllLines(ConfigFile);
         foreach (var line in lines)
         {
             if (line.StartsWith("DISPLAY1="))
-                display1 = line.Substring("DISPLAY1=".Length).Trim();
+                _display1 = line.Substring("DISPLAY1=".Length).Trim();
             else if (line.StartsWith("DISPLAY2="))
-                display2 = line.Substring("DISPLAY2=".Length).Trim();
+                _display2 = line.Substring("DISPLAY2=".Length).Trim();
         }
     }
 
-    static void SetPrimary(string displayId, string modeName)
+    private static void SetPrimary(string displayId, string modeName)
     {
         if (string.IsNullOrWhiteSpace(displayId)) return;
 
-        ProcessStartInfo psi = new ProcessStartInfo
+        var psi = new ProcessStartInfo
         {
-            FileName = tool,
+            FileName = Tool,
             Arguments = $"/SetPrimary \"{displayId}\"",
             CreateNoWindow = true,
             UseShellExecute = false
@@ -86,21 +88,25 @@ internal static class Program
         }
     }
 
-    static void ShowBalloon(string message)
+    private static void ShowBalloon(string message)
     {
-        NotifyIcon balloon = new NotifyIcon
+        var balloon = new NotifyIcon
         {
             Icon = new Icon("monitorswitcher.ico"),
             Visible = true
         };
+        
         balloon.ShowBalloonTip(3000, "Monitor Switcher", message, ToolTipIcon.Info);
+        
         // Oculta após o tempo do balão
-        Timer t = new Timer { Interval = 4000 };
-        t.Tick += (sender, args) =>
+        var t = new Timer { Interval = 4000 };
+        
+        t.Tick += (_, _) =>
         {
             balloon.Dispose();
             t.Stop();
         };
+        
         t.Start();
     }
 }
