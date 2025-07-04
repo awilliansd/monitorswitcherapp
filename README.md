@@ -53,7 +53,7 @@ DISPLAY2=\\.\DISPLAY2
 
 ### 1. Clonar o repositório
 ```bash
-git clone https://github.com/seu-usuario/MonitorSwitcherApp.git
+git clone https://github.com/awilliansd/monitorswitcherapp.git
 cd MonitorSwitcherApp
 ```
 
